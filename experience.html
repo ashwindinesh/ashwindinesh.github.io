@@ -121,7 +121,55 @@
       color: var(--fg);
     }
 
-    /* ── Section label ── */
+    /* ── Entrance animations ── */
+    @keyframes heroEntrance {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .page-header h1 {
+      opacity: 0;
+      animation: heroEntrance 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .reveal-item {
+      opacity: 0;
+      transform: translateY(20px);
+      transition:
+        opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity, transform;
+    }
+
+    .reveal-item.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── Section divider reveal ── */
+    .reveal-divider {
+      border-bottom-color: transparent;
+      position: relative;
+    }
+
+    .reveal-divider::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: var(--border);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal-divider.revealed::after {
+      transform: scaleX(1);
+    }
+
+    /* __ Section label ── */
     .label {
       font-size: 11px;
       font-weight: 600;
@@ -328,11 +376,11 @@
       <h1>Experience &amp; Education</h1>
     </section>
 
-    <section id="experience">
-      <p class="label">Experience</p>
+    <section id="experience" class="reveal-divider">
+      <p class="label reveal-item">Experience</p>
       <div class="exp-list">
 
-        <div class="exp-item">
+        <div class="exp-item reveal-item">
           <div class="exp-header">
             <span class="exp-role">Product Design Architect</span>
             <span class="exp-period">Feb 2021 &ndash; Present</span>
@@ -347,7 +395,7 @@
           </ul>
         </div>
 
-        <div class="exp-item">
+        <div class="exp-item reveal-item">
           <div class="exp-header">
             <span class="exp-role">Senior UX Designer</span>
             <span class="exp-period">Jun 2019 &ndash; Feb 2021</span>
@@ -360,7 +408,7 @@
           </ul>
         </div>
 
-        <div class="exp-item">
+        <div class="exp-item reveal-item">
           <div class="exp-header">
             <span class="exp-role">Senior UI/UX Designer</span>
             <span class="exp-period">Dec 2013 &ndash; Jun 2019</span>
@@ -373,7 +421,7 @@
           </ul>
         </div>
 
-        <div class="exp-item">
+        <div class="exp-item reveal-item">
           <div class="exp-header">
             <span class="exp-role">Interaction Designer</span>
             <span class="exp-period">Feb 2010 &ndash; Mar 2013</span>
@@ -384,7 +432,7 @@
           </ul>
         </div>
 
-        <div class="exp-item">
+        <div class="exp-item reveal-item">
           <div class="exp-header">
             <span class="exp-role">Asst. Engineer &amp; Freelance Designer</span>
             <span class="exp-period">Sep 2006 &ndash; Feb 2010</span>
@@ -400,10 +448,10 @@
     </section>
 
     <section id="education">
-      <p class="label">Education</p>
+      <p class="label reveal-item">Education</p>
       <div class="edu-list">
 
-        <div class="edu-item">
+        <div class="edu-item reveal-item">
           <div class="edu-header">
             <span class="edu-school">Annamalai University</span>
             <span class="edu-period">2016</span>
@@ -411,7 +459,7 @@
           <span class="edu-sub">BSc in Visual Communication</span>
         </div>
 
-        <div class="edu-item">
+        <div class="edu-item reveal-item">
           <div class="edu-header">
             <span class="edu-school">NTTF Electronics Training Centre</span>
             <span class="edu-period">2006</span>
@@ -419,7 +467,7 @@
           <span class="edu-sub">Diploma in Computer Engineering</span>
         </div>
 
-        <div class="edu-item">
+        <div class="edu-item reveal-item">
           <div class="edu-header">
             <span class="edu-school">Chinmaya Vidyalaya</span>
             <span class="edu-period">2003</span>
@@ -438,6 +486,33 @@
       linkedin.com/in/ashwindinesh
     </a>
   </footer>
+
+  <script>
+    // Staggered scroll reveal for experience & education items
+    const STAGGER_MS = 150;
+    const revealTargets = document.querySelectorAll('.reveal-item, .reveal-divider');
+
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter(e => e.isIntersecting)
+          .sort((a, b) => {
+            const all = Array.from(revealTargets);
+            return all.indexOf(a.target) - all.indexOf(b.target);
+          });
+
+        visible.forEach((entry, i) => {
+          setTimeout(() => {
+            entry.target.classList.add('revealed');
+          }, i * STAGGER_MS);
+          revealObserver.unobserve(entry.target);
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    );
+
+    revealTargets.forEach(el => revealObserver.observe(el));
+  </script>
 
 </body>
 </html>

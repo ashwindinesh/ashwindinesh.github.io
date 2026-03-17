@@ -133,10 +133,74 @@
       gap: 32px 28px;
     }
 
+    /* ── Entrance animations ── */
+    @keyframes heroEntrance {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .page-header h1,
+    .page-header p {
+      opacity: 0;
+      animation: heroEntrance 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .page-header h1 { animation-delay: 0ms; }
+    .page-header p   { animation-delay: 150ms; }
+
+    /* ── Shared reveal class ── */
+    .reveal-item {
+      opacity: 0;
+      transform: translateY(20px);
+      transition:
+        opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity, transform;
+    }
+
+    .reveal-item.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── Section divider reveal ── */
+    .reveal-divider {
+      border-bottom-color: transparent;
+      position: relative;
+    }
+
+    .reveal-divider::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: var(--border);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal-divider.revealed::after {
+      transform: scaleX(1);
+    }
+
     .work-card {
       display: block;
       text-decoration: none;
       color: inherit;
+      opacity: 0;
+      transform: translateY(20px);
+      transition:
+        opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity, transform;
+    }
+
+    .work-card.revealed {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .work-img-wrap {
@@ -144,6 +208,11 @@
       overflow: hidden;
       background: #f3f4f6;
       border-radius: 0;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .work-card:hover .work-img-wrap {
+      transform: scale(1.015);
     }
 
     .work-img {
@@ -151,7 +220,7 @@
       height: 100%;
       object-fit: cover;
       display: block;
-      transition: transform 0.35s ease;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .work-card:hover .work-img {
@@ -271,7 +340,7 @@
 
   <main>
 
-    <section class="page-header">
+    <section class="page-header reveal-divider">
       <h1>Design Portfolio</h1>
       <p>A selection of projects across product design, interaction design, and visual exploration.</p>
     </section>
@@ -337,7 +406,7 @@
 
       </div>
 
-      <a href="https://dribbble.com/ashwin" class="works-more" target="_blank" rel="noopener noreferrer">
+      <a href="https://dribbble.com/ashwin" class="works-more reveal-item" target="_blank" rel="noopener noreferrer">
         View all on Dribbble
         <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="12"
           height="12">
@@ -355,6 +424,33 @@
       linkedin.com/in/ashwindinesh
     </a>
   </footer>
+
+  <script>
+    // Staggered scroll reveal for all revealable elements
+    const STAGGER_MS = 150;
+    const revealTargets = document.querySelectorAll('.work-card, .reveal-item, .reveal-divider');
+
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter(e => e.isIntersecting)
+          .sort((a, b) => {
+            const all = Array.from(revealTargets);
+            return all.indexOf(a.target) - all.indexOf(b.target);
+          });
+
+        visible.forEach((entry, i) => {
+          setTimeout(() => {
+            entry.target.classList.add('revealed');
+          }, i * STAGGER_MS);
+          revealObserver.unobserve(entry.target);
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    );
+
+    revealTargets.forEach(el => revealObserver.observe(el));
+  </script>
 
 </body>
 

@@ -163,6 +163,33 @@
       50%       { opacity: 0.3; }
     }
 
+    /* ── Hero staggered entrance (Remotion spring(damping:200) equivalent) ── */
+    @keyframes heroEntrance {
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero-eyebrow,
+    .hero-name,
+    .hero-title,
+    .hero-sub,
+    .hero .btn {
+      opacity: 0;
+      animation: heroEntrance 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .hero-eyebrow   { animation-delay: 0ms; }
+    .hero-name       { animation-delay: 150ms; }
+    .hero-title      { animation-delay: 300ms; }
+    .hero-sub        { animation-delay: 500ms; }
+    .hero .btn       { animation-delay: 700ms; }
+
     h1 {
       font-weight: 600;
       letter-spacing: -0.035em;
@@ -249,6 +276,44 @@
       width: 13px;
       height: 13px;
       flex-shrink: 0;
+    }
+
+    /* ── Shared reveal class ── */
+    .reveal-item {
+      opacity: 0;
+      transform: translateY(20px);
+      transition:
+        opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity, transform;
+    }
+
+    .reveal-item.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── Section divider reveal ── */
+    .reveal-divider {
+      border-bottom-color: transparent;
+      position: relative;
+    }
+
+    .reveal-divider::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: var(--border);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal-divider.revealed::after {
+      transform: scaleX(1);
     }
 
     /* ── Section label ── */
@@ -373,6 +438,17 @@
       display: block;
       text-decoration: none;
       color: inherit;
+      opacity: 0;
+      transform: translateY(20px);
+      transition:
+        opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity, transform;
+    }
+
+    .work-card.revealed {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .work-img-wrap {
@@ -380,6 +456,11 @@
       overflow: hidden;
       background: #f3f4f6;
       border-radius: 0;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .work-card:hover .work-img-wrap {
+      transform: scale(1.015);
     }
 
     .work-img {
@@ -387,7 +468,7 @@
       height: 100%;
       object-fit: cover;
       display: block;
-      transition: transform 0.35s ease;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .work-card:hover .work-img {
@@ -531,7 +612,7 @@
 
   <main>
 
-    <section class="hero">
+    <section class="hero reveal-divider">
       <p class="hero-eyebrow">
         <span class="status-dot" aria-hidden="true"></span>
         Bengaluru, India
@@ -554,7 +635,7 @@
     </section>
 
     <section id="work">
-      <p class="label">Selected Work</p>
+      <p class="label reveal-item">Selected Work</p>
       <div class="works-grid">
 
         <a href="https://dribbble.com/shots/3208928-Date-selection" class="work-card" target="_blank" rel="noopener noreferrer">
@@ -586,7 +667,7 @@
         </a>
 
       </div>
-      <a href="work.html" class="works-more">
+      <a href="work.html" class="works-more reveal-item">
         View all projects
         <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="12" height="12">
           <path d="M1 6H11M11 6L7 2M11 6L7 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -626,6 +707,37 @@
     };
 
     window.addEventListener('scroll', onScroll, { passive: true });
+
+    // Staggered scroll reveal for all revealable elements
+    // Waits for hero entrance to mostly finish before observing
+    const STAGGER_MS = 150;
+    const HERO_DURATION_MS = 800;
+    const revealTargets = document.querySelectorAll('.work-card, .reveal-item, .reveal-divider');
+
+    function initReveal() {
+      const revealObserver = new IntersectionObserver(
+        (entries) => {
+          const visible = entries
+            .filter(e => e.isIntersecting)
+            .sort((a, b) => {
+              const all = Array.from(revealTargets);
+              return all.indexOf(a.target) - all.indexOf(b.target);
+            });
+
+          visible.forEach((entry, i) => {
+            setTimeout(() => {
+              entry.target.classList.add('revealed');
+            }, i * STAGGER_MS);
+            revealObserver.unobserve(entry.target);
+          });
+        },
+        { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+      );
+
+      revealTargets.forEach(el => revealObserver.observe(el));
+    }
+
+    setTimeout(initReveal, HERO_DURATION_MS);
   </script>
 
 </body>
