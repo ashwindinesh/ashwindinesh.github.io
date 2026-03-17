@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ashwin Dinesh — Product Designer</title>
+  <title>Work — Ashwin Dinesh</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
@@ -78,12 +78,8 @@
       color: var(--fg);
     }
 
-    .nav-links .nav-cta {
+    .nav-links .nav-active {
       color: var(--fg);
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      gap: 5px;
     }
 
     /* ── Layout ── */
@@ -93,207 +89,32 @@
       padding: 0 48px;
     }
 
-    section {
-      padding: 72px 0;
-      border-bottom: 1px solid var(--border);
+    .page-header {
+      padding-top: 140px;
+      padding-bottom: 0;
     }
 
-    section:last-of-type {
-      border-bottom: none;
-    }
-
-    /* ── Hero ── */
-    .hero {
-      padding-top: 180px;
-      padding-bottom: 120px;
-    }
-
-    .hero-eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      font-size: 13px;
-      color: var(--fg-muted);
-      margin-bottom: 22px;
-      letter-spacing: 0.01em;
-    }
-
-    .status-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: #22c55e;
-      flex-shrink: 0;
-      animation: blink 2.4s ease-in-out infinite;
-    }
-
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50%       { opacity: 0.3; }
-    }
-
-    h1 {
+    .page-header h1 {
+      font-size: clamp(36px, 5vw, 52px);
       font-weight: 600;
       letter-spacing: -0.035em;
-      line-height: 1.12;
-      color: var(--fg);
-      margin-bottom: 20px;
-    }
-
-    .hero-name {
-      display: block;
-      font-size: clamp(48px, 7.5vw, 80px);
-    }
-
-    .hero-title {
-      display: block;
-      font-size: clamp(32px, 4vw, 48px);
-    }
-
-    .hero-sub {
-      font-size: 24px;
-      color: var(--fg-muted);
-      line-height: 1.5;
-      margin-bottom: 36px;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      padding: 10px 18px;
-      background: var(--fg);
-      color: var(--bg);
-      font-family: inherit;
-      font-size: 13.5px;
-      font-weight: 500;
-      border-radius: 8px;
-      text-decoration: none;
-      transition: opacity 0.15s ease;
-    }
-
-    .btn:hover {
-      opacity: 0.82;
-    }
-
-    .btn svg {
-      width: 13px;
-      height: 13px;
-      flex-shrink: 0;
-    }
-
-    /* ── Section label ── */
-    .label {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.09em;
-      text-transform: uppercase;
-      color: var(--fg-muted);
-      margin-bottom: 36px;
-    }
-
-    /* ── Experience ── */
-    .exp-list {
-      display: flex;
-      flex-direction: column;
-      gap: 36px;
-    }
-
-    .exp-item {
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-    }
-
-    .exp-header {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 16px;
-    }
-
-    .exp-role {
-      font-size: 15px;
-      font-weight: 500;
-      letter-spacing: -0.012em;
+      line-height: 1.15;
       color: var(--fg);
     }
 
-    .exp-period {
-      font-size: 13px;
+    .page-header p {
+      font-size: 16px;
       color: var(--fg-muted);
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-
-    .exp-company {
-      font-size: 14px;
-      color: var(--fg-muted);
-    }
-
-    .exp-desc {
-      list-style: none;
-      margin-top: 10px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .exp-desc li {
-      font-size: 13.5px;
-      color: var(--fg-muted);
-      line-height: 1.65;
-      padding-left: 16px;
-      position: relative;
-    }
-
-    .exp-desc li::before {
-      content: '–';
-      position: absolute;
-      left: 0;
-      color: var(--border);
-    }
-
-    /* ── Education ── */
-    .edu-list {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    .edu-item {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .edu-header {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 16px;
-    }
-
-    .edu-school {
-      font-size: 15px;
-      font-weight: 500;
-      letter-spacing: -0.012em;
-      color: var(--fg);
-    }
-
-    .edu-period {
-      font-size: 13px;
-      color: var(--fg-muted);
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-
-    .edu-sub {
-      font-size: 14px;
-      color: var(--fg-muted);
+      margin-top: 12px;
+      max-width: 480px;
+      text-wrap: balance;
     }
 
     /* ── Works ── */
+    .works-section {
+      padding: 56px 0 72px;
+    }
+
     .works-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -337,7 +158,7 @@
       display: inline-flex;
       align-items: center;
       gap: 5px;
-      margin-top: 24px;
+      margin-top: 32px;
       font-size: 13.5px;
       color: var(--fg-muted);
       text-decoration: none;
@@ -356,6 +177,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      border-top: 1px solid var(--border);
     }
 
     footer p {
@@ -380,14 +202,8 @@
         padding-inline: 32px;
       }
 
-      .hero {
-        padding-top: 140px;
-        padding-bottom: 80px;
-      }
-
-      .hero-sub {
-        white-space: normal;
-        font-size: 18px;
+      .page-header {
+        padding-top: 110px;
       }
     }
 
@@ -397,7 +213,6 @@
         padding: 0 20px;
       }
 
-      /* On mobile show only About and Work */
       .nav-links li:nth-child(n+3) {
         display: none;
       }
@@ -406,18 +221,8 @@
         padding-inline: 20px;
       }
 
-      .hero {
-        padding-top: 100px;
-        padding-bottom: 56px;
-      }
-
-      .hero-sub {
-        font-size: 16px;
-        white-space: normal;
-      }
-
-      section {
-        padding: 48px 0;
+      .page-header {
+        padding-top: 90px;
       }
 
       .works-grid {
@@ -427,18 +232,6 @@
 
       .work-title {
         padding: 10px 0;
-      }
-
-      .exp-header,
-      .edu-header {
-        flex-direction: column;
-        gap: 2px;
-      }
-
-      .exp-period,
-      .edu-period {
-        order: 2;
-        font-size: 12px;
       }
 
       footer {
@@ -452,40 +245,22 @@
 <body>
 
   <nav>
-    <a href="#" class="nav-brand">Ashwin Dinesh</a>
+    <a href="index.html" class="nav-brand">Ashwin Dinesh</a>
     <ul class="nav-links">
-      <li><a href="#">About</a></li>
-      <li><a href="work.html">Work</a></li>
+      <li><a href="index.html">About</a></li>
+      <li><a href="work.html" class="nav-active">Work</a></li>
       <li><a href="experience.html">Experience</a></li>
     </ul>
   </nav>
 
   <main>
 
-    <section class="hero">
-      <p class="hero-eyebrow">
-        <span class="status-dot" aria-hidden="true"></span>
-        Bengaluru, India
-      </p>
-      <h1><span class="hero-name">Ashwin Dinesh,</span><span class="hero-title">Product Design Architect.</span></h1>
-      <p class="hero-sub">
-        Design leader with 18+ years of experience shaping global digital products across consumer and enterprise platforms. Currently at Tekion Corp.
-      </p>
-      <a
-        href="https://www.linkedin.com/in/ashwindinesh/"
-        class="btn"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Connect on LinkedIn
-        <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M2 10L10 2M10 2H4.5M10 2V7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </a>
+    <section class="page-header">
+      <h1>Work</h1>
+      <p>A selection of projects across product design, interaction design, and visual exploration.</p>
     </section>
 
-    <section id="work">
-      <p class="label">Selected Work</p>
+    <section class="works-section">
       <div class="works-grid">
 
         <a href="https://dribbble.com/shots/3208928-Date-selection" class="work-card" target="_blank" rel="noopener noreferrer">
@@ -516,15 +291,29 @@
           <p class="work-title">Day 002</p>
         </a>
 
+        <a href="https://dribbble.com/shots/3333198-Day005" class="work-card" target="_blank" rel="noopener noreferrer">
+          <div class="work-img-wrap">
+            <img class="work-img" src="https://cdn.dribbble.com/userupload/21684331/file/original-386c225846a2cab148876c74f6d30f5f.png?resize=400x0" alt="Day 005" loading="lazy">
+          </div>
+          <p class="work-title">Day 005</p>
+        </a>
+
+        <a href="https://dribbble.com/shots/2170476-Kontrol-App" class="work-card" target="_blank" rel="noopener noreferrer">
+          <div class="work-img-wrap">
+            <img class="work-img" src="https://cdn.dribbble.com/userupload/41759492/file/original-0534158f430b28480d9a26e03f01606c.png?resize=400x0" alt="Kontrol App" loading="lazy">
+          </div>
+          <p class="work-title">Kontrol App</p>
+        </a>
+
       </div>
-      <a href="work.html" class="works-more">
-        View all projects
+
+      <a href="https://dribbble.com/ashwin" class="works-more" target="_blank" rel="noopener noreferrer">
+        View all on Dribbble
         <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="12" height="12">
-          <path d="M1 6H11M11 6L7 2M11 6L7 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M2 10L10 2M10 2H4.5M10 2V7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </a>
     </section>
-
 
   </main>
 
@@ -534,30 +323,6 @@
       linkedin.com/in/ashwindinesh
     </a>
   </footer>
-
-  <script>
-    // Active nav link highlight on scroll
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
-
-    const onScroll = () => {
-      const scrollY = window.scrollY;
-      let active = null;
-
-      sections.forEach(section => {
-        if (scrollY >= section.offsetTop - 80) {
-          active = section.id;
-        }
-      });
-
-      navLinks.forEach(link => {
-        const isActive = link.getAttribute('href') === `#${active}`;
-        link.style.color = isActive ? 'var(--fg)' : '';
-      });
-    };
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-  </script>
 
 </body>
 </html>
